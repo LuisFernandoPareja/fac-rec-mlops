@@ -17,11 +17,12 @@ venv/
 # DVC
 *.dvc
 !*.dvc  # allow .dvc files (they’re metadata, not the data)
+!.dvc
 .dvc/cache/
 .dvc/tmp/
 
 # Dataset and outputs
-yolo_dataset/
+dataset/
 runs/
 
 # PyTorch cache
