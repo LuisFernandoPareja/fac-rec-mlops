@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# Environment
+.env
+.venv/
+env/
+venv/
+*.egg-info/
+
+# VSCode / IDEs
+.vscode/
+.idea/
+
+# DVC
+*.dvc
+!*.dvc  # allow .dvc files (they’re metadata, not the data)
+.dvc/cache/
+.dvc/tmp/
+
+# Dataset and outputs
+yolo_dataset/
+runs/
+
+# PyTorch cache
+~/.cache/
+*.pt
+
+# Logs / artifacts
+*.log
+*.ckpt
+
+# OS junk
+.DS_Store
+Thumbs.db
