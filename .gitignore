@@ -22,7 +22,8 @@ venv/
 .dvc/tmp/
 
 # Dataset and outputs
-dataset/
+dataset/*
+!dataset.dvc
 runs/
 
 # PyTorch cache
@@ -38,3 +39,4 @@ runs/
 Thumbs.db
 
 yolov5/
+/dataset
