@@ -43,6 +43,21 @@ jobs:
         git clone https://github.com/ultralytics/yolov5.git
         cd yolov5
         pip install -r requirements.txt  # Make sure YOLOv5 dependencies are installed
+
+    - name: 🛠️ Patch detect.py for CI
+      run: |
+        echo '
+        import pathlib
+        import sys
+        from pathlib import Path
+
+        # Fix WindowsPath issue on Linux
+        if isinstance(Path(), pathlib.WindowsPath):
+            pathlib.WindowsPath = pathlib.PosixPath
+
+        # Ensure yolov5 is in the import path
+        sys.path.append(str(Path(__file__).resolve().parent))
+        ' | cat - yolov5/detect.py > temp && mv temp yolov5/detect.py
     
     - name: ✅ Run your test or script
-      run: python yolov5/detect.py --weights models/best_linux_clean.pt --img 640 --source captured_images\image_0000.jpg
+      run: python detect.py --weights models/best.pt --img 640 --source captured_images\image_0000.jpg

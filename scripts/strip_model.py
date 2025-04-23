@@ -1,12 +1,6 @@
-import sys
-import os
 import torch
 from pathlib import Path
-# Add yolov5 folder to the system path
-yolo_path = os.path.join(os.path.dirname(__file__), '../yolov5')
-sys.path.append(os.path.abspath(yolo_path))
-
-from models.yolo import Model as DetectionModel
+from ultralytics.nn.tasks import DetectionModel
 from torch.serialization import safe_globals
 
 # Force all paths to Posix (Linux-style)
@@ -19,8 +13,7 @@ def to_posix_paths(obj):
         return Path(str(obj).replace("\\", "/"))
     return obj
 
-
 with safe_globals([DetectionModel]):
-    checkpoint = torch.load("models/best.pt", map_location="cpu", weights_only=False)
-    cleaned_ckpt = to_posix_paths(checkpoint)
-    torch.save(cleaned_ckpt, "models/best_linux_clean.pt")
+    ckpt = torch.load("models/best.pt", map_location="cpu", weights_only=False)
+    cleaned_ckpt = to_posix_paths(ckpt)
+    torch.save(cleaned_ckpt, "models/best2_linux.pt")
