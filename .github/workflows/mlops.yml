@@ -45,4 +45,4 @@ jobs:
         pip install -r requirements.txt  # Make sure YOLOv5 dependencies are installed
     
     - name: ✅ Run your test or script
-      run: python yolov5/detect.py --weights models/best_stripped.pt --img 640 --source captured_images\image_0000.jpg
+      run: python yolov5/detect.py --weights models/best_clean.pt --img 640 --source captured_images\image_0000.jpg
