@@ -1,0 +1,5 @@
+outs:
+- md5: 58ab13f734a968ce341009edf7d859f0
+  size: 14546336
+  hash: md5
+  path: best_linux_clean.pt
