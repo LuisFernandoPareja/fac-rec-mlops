@@ -14,12 +14,16 @@ venv/
 .vscode/
 .idea/
 
-# DVC
+# Ignore all DVC files...
 *.dvc
-!*.dvc  # allow .dvc files (they’re metadata, not the data)
-!.dvc
+
+# ...but allow them explicitly (this overrides the line above)
+!*.dvc
+
+# Ignore DVC cache and temp files (you don't need to track those)
 .dvc/cache/
 .dvc/tmp/
+
 
 # Dataset and outputs
 dataset/*
