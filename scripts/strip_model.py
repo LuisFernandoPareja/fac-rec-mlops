@@ -16,4 +16,4 @@ def to_posix_paths(obj):
 with safe_globals([DetectionModel]):
     ckpt = torch.load("models/best.pt", map_location="cpu", weights_only=False)
     cleaned_ckpt = to_posix_paths(ckpt)
-    torch.save(cleaned_ckpt, "models/best2_linux.pt")
+    torch.save(cleaned_ckpt, "models/best_linux.pt")
