@@ -37,6 +37,12 @@ jobs:
 
     - name: ⬇️ Pull data and models
       run: dvc pull
-
+    
+    - name: 🔄 Clone YOLOv5 repo
+      run: |
+        git clone https://github.com/ultralytics/yolov5.git
+        cd yolov5
+        pip install -r requirements.txt  # Make sure YOLOv5 dependencies are installed
+    
     - name: ✅ Run your test or script
-      run: python detect.py --weights models/best.pt --img 640 --source some_image.jpg
+      run: python yolov5/detect.py --weights models/best.pt --img 640 --source captured_images\image_0000.jpg
