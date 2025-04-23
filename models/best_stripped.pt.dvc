@@ -1,0 +1,5 @@
+outs:
+- md5: 09af4ffeaf83382935a2c04dcd96626a
+  size: 14543458
+  hash: md5
+  path: best_stripped.pt
