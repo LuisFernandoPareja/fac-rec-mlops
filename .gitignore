@@ -9,7 +9,7 @@ __pycache__/
 env/
 venv/
 *.egg-info/
-
+.dvc/dvc-ml-5a540d4ae328.json
 # VSCode / IDEs
 .vscode/
 .idea/

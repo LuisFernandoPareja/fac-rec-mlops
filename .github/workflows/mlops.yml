@@ -29,9 +29,11 @@ jobs:
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
       run: |
-        echo "$GDRIVE_CREDENTIALS_DATA" > credentials.json
+        echo "$GDRIVE_CREDENTIALS_DATA" | base64 --decode > dvc-ml-5a540d4ae328.json
+        
+        # Configure DVC to use the service account credentials
         dvc remote modify myremote gdrive_use_service_account true
-        dvc remote modify myremote gdrive_service_account_json_file_path credentials.json
+        dvc remote modify myremote gdrive_service_account_json_file_path dvc-ml-5a540d4ae328.json
 
     - name: ⬇️ Pull data and models
       run: dvc pull
