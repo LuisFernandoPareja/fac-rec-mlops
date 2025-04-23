@@ -1,0 +1,5 @@
+outs:
+- md5: 36a73d599c837b3d759bbfec1aa0ab52
+  size: 14544164
+  hash: md5
+  path: best_clean.pt
