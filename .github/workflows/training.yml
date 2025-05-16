@@ -76,6 +76,5 @@ jobs:
         git add -f models/best_trained.pt
         git commit -m "Trained model updated"
         git push
-        https://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@github.com/LuisFernandoPareja/fac-rec-mlops.git
       env:
         GITHUB_TOKEN: ${{ secrets.Collab }}
