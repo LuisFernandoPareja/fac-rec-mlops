@@ -1,19 +1,38 @@
 import cv2
 import os
-from PIL import Image
+import random
+from glob import glob
 
 # Configuration
-output_dir = 'captured_images'
-os.makedirs(output_dir, exist_ok=True)
-cam = cv2.VideoCapture(0)  # 0 is usually the default webcam
+output_dir = 'dataset/images'
+train_dir = os.path.join(output_dir, 'train')
+val_dir = os.path.join(output_dir, 'val')
+os.makedirs(train_dir, exist_ok=True)
+os.makedirs(val_dir, exist_ok=True)
+
+val_ratio = 0.2  # 20% validation, 80% training
+
+# Find the highest existing image number
+def get_last_image_number(directory):
+    images = glob(os.path.join(directory, 'image_*.jpg'))
+    if not images:
+        return 0
+    last_num = max([int(os.path.basename(img).split('_')[1].split('.')[0]) for img in images])
+    return last_num + 1
+
+# Start counter from the next available number
+img_counter = max(
+    get_last_image_number(train_dir),
+    get_last_image_number(val_dir)
+)
+
+cam = cv2.VideoCapture(0)
 
 if not cam.isOpened():
     print("Error: Could not open webcam.")
     exit()
 
 print("Press SPACE to capture an image. Press ESC to exit.")
-
-img_counter = 0
 
 while True:
     ret, frame = cam.read()
@@ -31,9 +50,17 @@ while True:
         break
     elif k % 256 == 32:
         # SPACE pressed
-        img_name = f"{output_dir}/image_{img_counter:04}.jpg"
-        cv2.imwrite(img_name, resized_frame)
-        print(f"{img_name} saved!")
+        if random.random() < val_ratio:
+            save_dir = val_dir
+            set_name = 'validation'
+        else:
+            save_dir = train_dir
+            set_name = 'training'
+        
+        img_name = f"image_{img_counter:04}.jpg"
+        img_path = os.path.join(save_dir, img_name)
+        cv2.imwrite(img_path, resized_frame)
+        print(f"{img_path} saved to {set_name} set!")
         img_counter += 1
 
 cam.release()

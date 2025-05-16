@@ -1,9 +1,12 @@
 name: MLOps Pipeline
 
 on:
+  workflow_dispatch:   # allow manual triggering
+
   push:
     paths:
-      - 'captured_images/**'  # Only trigger when files change in this folder
+      - 'data/**'
+      - '*.dvc'
   
 
 jobs:
@@ -44,16 +47,34 @@ jobs:
         cd yolov5
         pip install -r requirements.txt  # Make sure YOLOv5 dependencies are installed
 
-  
-    - name: ✅ Run your test or script
-      run: python yolov5/detect.py --weights models/best_collab.pt --img 640 --source captured_images
-
-    - name: Commit results
+    - name: 🛠️ Patch detect.py for CI
       run: |
-        git config --global user.email "luisfercho2428@gmail.com"
-        git config --global user.name "Fernando Pareja"
-        git add yolov5/runs/detect/auto_detect
-        git commit -m "Add detection results from new images"
+        echo '
+        import pathlib
+        import sys
+        from pathlib import Path
+
+        # Fix WindowsPath issue on Linux
+        if isinstance(Path(), pathlib.WindowsPath):
+            pathlib.WindowsPath = pathlib.PosixPath
+
+        # Ensure yolov5 is in the import path
+        sys.path.append(str(Path(__file__).resolve().parent))
+        ' | cat - yolov5/detect.py > temp && mv temp yolov5/detect.py
+    
+    - name: ✅ Run your test or script
+      run: python yolov5/train.py --weights models/best_collab.pt --img 640 --source captured_images/image_0000.jpg
+
+    - name: Save trained model
+        run: |
+          cp yolov5/runs/train/custom/weights/best.pt models/best_trained.pt
+
+    - name: Commit model
+      run: |
+        git config --global user.email "your-email@example.com"
+        git config --global user.name "Your Name"
+        git add models/best_trained.pt
+        git commit -m "Trained model updated"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
