@@ -73,7 +73,7 @@ jobs:
       run: |
         git config --global user.email "luisfercho2428@gmail.com"
         git config --global user.name "Fernando Pareja"
-        git add models/best_trained.pt
+        git add -f models/best_trained.pt
         git commit -m "Trained model updated"
         git push
       env:
