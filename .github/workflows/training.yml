@@ -66,8 +66,8 @@ jobs:
       run: python yolov5/train.py --weights models/best_collab.pt --img 640 --source captured_images/image_0000.jpg
 
     - name: Save trained model
-        run: |
-          cp yolov5/runs/train/custom/weights/best.pt models/best_trained.pt
+      run: |
+        cp yolov5/runs/train/custom/weights/best.pt models/best_trained.pt
 
     - name: Commit model
       run: |
