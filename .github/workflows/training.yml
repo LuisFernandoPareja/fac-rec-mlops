@@ -63,7 +63,7 @@ jobs:
         ' | cat - yolov5/detect.py > temp && mv temp yolov5/detect.py
     
     - name: ✅ Run your test or script
-      run: python yolov5/train.py --weights models/best_collab.pt --img 640 --source captured_images/image_0000.jpg
+      run: python yolov5/train.py --img 640 --batch 16 --epochs 30 --data yolo_dataset.yaml --weights models/best_collab.pt --name my_exp
 
     - name: Save trained model
       run: |
@@ -71,8 +71,8 @@ jobs:
 
     - name: Commit model
       run: |
-        git config --global user.email "your-email@example.com"
-        git config --global user.name "Your Name"
+        git config --global user.email "luisfercho2428@gmail.com"
+        git config --global user.name "Fernando Pareja"
         git add models/best_trained.pt
         git commit -m "Trained model updated"
         git push
