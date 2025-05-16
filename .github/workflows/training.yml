@@ -63,11 +63,11 @@ jobs:
         ' | cat - yolov5/detect.py > temp && mv temp yolov5/detect.py
     
     - name: ✅ Run your test or script
-      run: python yolov5/train.py --img 640 --batch 16 --epochs 30 --data yolo_dataset.yaml --weights models/best_collab.pt --name my_exp
+      run: python yolov5/train.py --img 640 --batch 16 --epochs 30 --data yolo_dataset.yaml --weights models/best_collab.pt --name fer_exp
 
     - name: Save trained model
       run: |
-        cp yolov5/runs/train/custom/weights/best.pt models/best_trained.pt
+        cp yolov5/runs/train/fer_exp/weights/best.pt models/best_trained.pt
 
     - name: Commit model
       run: |
